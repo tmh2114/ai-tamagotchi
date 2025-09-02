@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- CloudKit Container -->
+    <key>com.apple.developer.icloud-container-identifiers</key>
+    <array>
+        <string>iCloud.com.tamagotchi.ai</string>
+    </array>
+    
+    <!-- CloudKit Services -->
+    <key>com.apple.developer.icloud-services</key>
+    <array>
+        <string>CloudKit</string>
+    </array>
+    
+    <!-- HealthKit (for activity integration) -->
+    <key>com.apple.developer.healthkit</key>
+    <true/>
+    
+    <!-- HealthKit Capabilities -->
+    <key>com.apple.developer.healthkit.access</key>
+    <array>
+        <string>health-records</string>
+    </array>
+    
+    <!-- Push Notifications (for CloudKit sync) -->
+    <key>aps-environment</key>
+    <string>development</string>
+    
+    <!-- Background Modes -->
+    <key>com.apple.developer.background-modes</key>
+    <array>
+        <string>remote-notification</string>
+        <string>processing</string>
+    </array>
+    
+    <!-- App Groups (for sharing data between app and extensions) -->
+    <key>com.apple.security.application-groups</key>
+    <array>
+        <string>group.com.tamagotchi.ai</string>
+    </array>
+    
+    <!-- Network Client (for CloudKit) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    
+    <!-- File Access -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+    
+    <!-- Personal Information -->
+    <key>com.apple.security.personal-information.photos-library</key>
+    <true/>
+</dict>
+</plist>
