@@ -9,9 +9,11 @@
 - **visionOS**: 1.0+ (Future consideration)
 
 ### Development Environment
-- **Xcode**: 15.0+
-- **Swift**: 5.9+
+- **Xcode**: 15.0+ (Required for iOS 17 and watchOS 10 SDKs)
+- **Swift**: 5.9+ (Minimum for macro support and modern concurrency)
 - **macOS**: Sonoma 14.0+ (for development)
+- **Reality Composer Pro**: For future AR/VR assets
+- **Create ML**: For on-device model training
 
 ## Core Technologies
 
@@ -19,17 +21,29 @@
 
 #### Swift 5.9+ Features
 - **Macros**: For code generation and boilerplate reduction
+  - `@Observable`: Simplified state management
+  - `@Model`: SwiftData model definitions
+  - Custom macros for pet behavior patterns
 - **Structured Concurrency**: async/await, actors for thread-safe state management
+  - Actor isolation for AI inference
+  - TaskGroup for parallel processing
+  - AsyncStream for real-time updates
 - **Parameter Packs**: Generic programming improvements
 - **Non-copyable Types**: Memory-efficient value types
+- **Typed Throws**: Better error handling
+- **Consuming and Borrowing**: Ownership control
 
-#### SwiftUI
+#### SwiftUI (iOS 17+ & watchOS 10+)
 - **Primary UI Framework**: All interfaces built with SwiftUI
-- **Navigation Stack**: Type-safe navigation
+- **Navigation Stack**: Type-safe navigation with value-based routing
 - **Observable Framework**: @Observable macro for state management
-- **Charts**: Native visualization for pet stats
-- **Widget Kit**: Home screen and Lock Screen widgets
+- **Charts**: Native visualization for pet stats and mood tracking
+- **Widget Kit**: Home screen, Lock Screen, and StandBy widgets
 - **App Intents**: Siri and Shortcuts integration
+- **ScrollView Enhancements**: Content margins and safe area handling
+- **Animation**: Keyframe animations and spring animations
+- **Metal Shaders**: Custom visual effects for pet rendering
+- **TipKit**: User onboarding and feature discovery
 
 #### UIKit (Limited Use)
 - **Haptic Feedback**: Advanced haptics on iPhone
@@ -61,11 +75,39 @@
 - **Quantization**: 4-bit quantization for mobile
 - **Memory Requirements**: ~2GB RAM
 - **Inference**: Metal Performance Shaders
+- **Context Window**: 4K tokens (128K with RoPE)
+- **Response Time**: <2 seconds for typical queries
+- **Batch Processing**: Offline conversation generation
+- **Fine-tuning**: User personality adaptation
 
 #### Create ML
 - **Personalization**: User-specific model fine-tuning
 - **Activity Classification**: Pet behavior patterns
 - **Text Classification**: Message sentiment analysis
+
+### Swift 5.9+ Language Enhancements
+
+#### Macro System
+- **@Observable**: Automatic UI updates without @Published
+- **@Model**: SwiftData model synthesis
+- **@Transient**: Non-persistent properties
+- **Custom Macros**: Domain-specific code generation
+  - Pet behavior state machines
+  - Interaction pattern matching
+  - Achievement system generation
+
+#### Concurrency Improvements
+- **Task Priority Propagation**: AI inference prioritization
+- **Task Local Values**: Per-task context storage
+- **Async Algorithms**: Stream processing for real-time data
+- **Actor Reentrancy**: Safe concurrent pet state updates
+- **Sendable Conformance**: Thread-safe data passing
+
+#### Type System Enhancements
+- **Noncopyable Types**: Resource management for AI models
+- **Typed Throws**: Precise error handling for network/AI failures
+- **Generic Parameter Packs**: Flexible pet trait systems
+- **Ownership Modifiers**: Memory optimization for large models
 
 ### System Frameworks
 
@@ -158,31 +200,88 @@
 - **Actor Model**: Thread-safe state management
 - **Functional Reactive**: Combine framework usage
 
-## Third-Party Dependencies
+## Package Management & Dependencies
 
-### Minimal External Dependencies
-- **Philosophy**: Prefer native frameworks
-- **Swift Package Manager**: Dependency management
-- **Open Source**: MIT/Apache licensed only
+### Swift Package Manager (SPM)
+- **Primary Tool**: All dependencies via SPM
+- **Local Packages**: Modular architecture support
+- **Binary Targets**: Pre-compiled AI models
+- **Version Resolution**: Semantic versioning
+- **Platform Conditionals**: iOS/watchOS specific packages
 
-### Potential Libraries (If Needed)
-- **Lottie**: Complex animations (evaluate native first)
-- **SwiftLint**: Code quality enforcement
+### Core Dependencies
+```swift
+// Package.swift targets
+.package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
+.package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
+.package(url: "https://github.com/apple/swift-collections", from: "1.1.0"),
+.package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0") // CLI tools
+```
+
+### Development Dependencies
+- **SwiftLint**: Code style enforcement (development only)
+- **SwiftFormat**: Automatic code formatting
 - **Periphery**: Dead code detection
+- **SwiftGen**: Code generation for resources
+
+### Potential Libraries (Evaluated Case-by-Case)
+- **Lottie**: Only if native animations insufficient
+- **TelemetryDeck**: Privacy-focused analytics
+- **RevenueCat**: Subscription management (if needed)
+
+## Build Configuration
+
+### Compilation Settings
+- **Swift Language Version**: 5.9
+- **Build Active Architecture Only**: Debug only
+- **Optimization Level**: -Os (Size) for Release
+- **Whole Module Optimization**: Enabled for Release
+- **Link Time Optimization**: Enabled for Release
+
+### Swift Compiler Flags
+- **Debug**: `-D DEBUG -Onone`
+- **Release**: `-D RELEASE -O -whole-module-optimization`
+- **Strict Concurrency**: `complete` checking
+- **Enable Upcoming Features**: For Swift 6 preparation
+
+### Platform-Specific Settings
+#### iOS Target
+- **Deployment Target**: iOS 17.0
+- **Device Family**: iPhone only
+- **Requires Full Screen**: No (multitasking support)
+- **Supported Orientations**: All
+
+#### watchOS Target  
+- **Deployment Target**: watchOS 10.0
+- **Device Family**: Apple Watch
+- **Independent App**: Yes
+- **Supports Running Without iOS**: Yes
 
 ## Platform-Specific Features
 
-### iOS 17+ Exclusive
-- **Interactive Widgets**: Live Activities
-- **StandBy Mode**: Always-on display support
-- **Sensitive Content Analysis**: On-device safety
-- **Screen Distance**: Eye health monitoring
+### iOS 17+ Exclusive Features
+- **Interactive Widgets**: Live Activities and dynamic updates
+- **StandBy Mode**: Always-on display support with pet animations
+- **Sensitive Content Analysis**: On-device safety for user inputs
+- **Screen Distance**: Eye health monitoring and reminders
+- **Journal Suggestions**: Pet mood correlation with daily events
+- **Contact Posters**: Pet-themed contact customization
+- **Animated Symbols**: SF Symbols 5 with animations
+- **SwiftData**: Modern persistence framework
+- **TipKit**: Contextual user guidance
+- **Observation Framework**: Simplified state management
 
-### watchOS 10+ Exclusive
-- **Smart Stack**: Widget suggestions
-- **Digital Crown**: Precise interactions
-- **Always-On Display**: Ambient updates
-- **Double Tap Gesture**: Quick actions
+### watchOS 10+ Exclusive Features
+- **Smart Stack**: Intelligent widget suggestions based on context
+- **Digital Crown**: Precise pet interaction controls
+- **Always-On Display**: Ambient pet state updates
+- **Double Tap Gesture**: Quick pet interactions
+- **Vertical Pagination**: New navigation paradigm
+- **Control Center**: Quick access to pet controls
+- **Enhanced Complications**: Rich pet status displays
+- **Background App Refresh**: Autonomous pet updates
+- **Workout APIs**: Pet activity during exercise
+- **Depth App**: Environmental awareness (Ultra only)
 
 ### Shared Features
 - **App Groups**: Data sharing
@@ -209,6 +308,46 @@
 - **Warm Start**: <0.5 seconds
 - **Model Load**: <3 seconds
 - **Watch App**: <2 seconds
+
+## watchOS 10+ Development Considerations
+
+### Architecture
+- **Independent App**: Standalone functionality without iPhone
+- **Companion Mode**: Enhanced features when paired
+- **Background Processing**: Autonomous pet updates
+- **Complication Timeline**: Predictive pet state updates
+
+### Performance Optimization
+- **Lazy Loading**: On-demand resource loading
+- **Image Caching**: Efficient pet sprite management
+- **Background Tasks**: Scheduled pet updates
+- **Power Management**: Battery-aware AI inference
+
+### User Interface
+- **Vertical Navigation**: Primary interaction model
+- **Digital Crown Input**: Analog pet interactions
+- **Force Touch Alternatives**: Long press menus
+- **Glanceable Information**: Quick pet status checks
+
+### Connectivity
+- **Watch Connectivity**: Real-time iPhone sync
+- **CloudKit Direct**: Independent cloud sync
+- **Bluetooth**: Peer-to-peer pet sharing
+- **Cellular**: LTE/5G for independent operation
+
+## iOS 17+ Specific APIs
+
+### New Frameworks
+- **TipKit**: Progressive disclosure of features
+- **Observation**: Simplified state management
+- **SwiftData**: Modern Core Data replacement
+- **SensitiveContentAnalysis**: Content moderation
+
+### Enhanced APIs
+- **WidgetKit**: Interactive and Smart Stack widgets
+- **StoreKit 2**: Modern in-app purchase flow
+- **WeatherKit**: Environmental pet reactions
+- **MapKit**: Location-based pet behaviors
 
 ## Development Phases
 
@@ -240,33 +379,44 @@
 
 | Component | Minimum | Recommended | Notes |
 |-----------|---------|-------------|-------|
-| iOS | 17.0 | 17.2+ | Latest features |
-| watchOS | 10.0 | 10.2+ | Smart Stack |
-| Swift | 5.9 | 5.9+ | Macros support |
-| Xcode | 15.0 | 15.2+ | Latest SDKs |
-| iPhone | iPhone 12 | iPhone 14+ | Neural Engine |
-| Apple Watch | Series 6 | Series 9+ | Performance |
-| RAM | 4GB | 6GB+ | AI inference |
-| Storage | 500MB | 2GB+ | With AI model |
+| iOS | 17.0 | 17.2+ | Latest features, TipKit |
+| watchOS | 10.0 | 10.2+ | Smart Stack, Double Tap |
+| Swift | 5.9 | 5.9.2+ | Macros, typed throws |
+| Xcode | 15.0 | 15.2+ | visionOS SDK support |
+| iPhone | iPhone 12 | iPhone 15 Pro | Neural Engine, Action Button |
+| Apple Watch | Series 6 | Series 9/Ultra 2 | S9 chip, Double Tap |
+| RAM | 4GB | 8GB+ | AI inference headroom |
+| Storage | 500MB | 3GB+ | Model + user data |
+| Neural Engine | A14+ | A17 Pro+ | 16-core for best performance |
 
 ## Future Considerations
 
-### visionOS Support
-- Spatial computing pet
-- 3D interactions
-- Immersive experiences
+### visionOS Support (2024+)
+- Spatial computing pet with 3D presence
+- Hand tracking for natural interactions
+- Immersive environments for pet habitats
+- Shared space and full space experiences
 
 ### Mac Catalyst
-- Desktop companion app
-- Extended features
-- Development tools
+- Desktop companion app with extended features
+- Development and debugging tools
+- Larger screen optimizations
+- Keyboard and trackpad support
 
 ### HomeKit Integration
-- Home automation triggers
-- Ambient computing
-- Presence detection
+- Home automation triggers based on pet mood
+- Ambient computing with pet presence
+- Matter protocol support
+- Location-based pet behaviors
 
 ### ARKit Integration
-- AR pet visualization
-- Real-world interactions
-- Spatial anchoring
+- AR pet visualization in real world
+- Object tracking and occlusion
+- Spatial anchoring for persistent placement
+- LiDAR-enhanced interactions (Pro models)
+
+### Apple Intelligence (iOS 18+)
+- Enhanced on-device language models
+- Multimodal understanding
+- Federated learning for personalization
+- Private Cloud Compute integration
